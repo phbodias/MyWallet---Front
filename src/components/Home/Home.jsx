@@ -49,19 +49,24 @@ export default function Home() {
                 })}
             </Registros>
             <Adicionar>
-                <Link to="/entrada" style={{ textDecoration: 'none' }}>
+                <Styledlink to="/entrada" style={{ textDecoration: 'none' }}>
                     <Entrada>Nova Entrada</Entrada>
-                </Link>
-                <Link to="/saida" style={{ textDecoration: 'none' }}>
+                </Styledlink>
+                <Styledlink to="/saida" style={{ textDecoration: 'none' }}>
                     <Saida>Nova Saida</Saida>
-                </Link>
+                </Styledlink>
             </Adicionar>
         </Container>
     )
 }
 
-const Saida = styled.div`
+const Styledlink = styled(Link)`
     width: 47.5%;
+    text-decoration: none;
+    color: #FFFFFF;
+`
+
+const Saida = styled.div`
     height: 155px;
     background-color: #A328D6;
     padding-top: 40%;
@@ -69,7 +74,6 @@ const Saida = styled.div`
 `
 
 const Entrada = styled.div`
-    width: 47.5%;
     height: 155px;
     margin-right: 5%;
     background-color: #A328D6;

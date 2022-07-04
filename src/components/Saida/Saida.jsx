@@ -1,5 +1,7 @@
 export default function Saida() {
-    <>
-        aqui são as saidas
-    </>
+    return (
+        <>
+            aqui são as saidas
+        </>
+    )
 }
