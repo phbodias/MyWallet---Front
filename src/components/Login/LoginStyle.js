@@ -6,7 +6,7 @@ const Container = styled.div`
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    background-color: #082A3A;
+    background-color: #8C11BE;
     height: 100vh;
 
     form {
@@ -46,7 +46,7 @@ const Input = styled.input`
 const Button = styled.button`
   height: 45px;
   text-align: center;
-  background-color: #52B6FF;
+  background-color: #A328D6;
   border: none;
   color: #222222;
   width: 100%;

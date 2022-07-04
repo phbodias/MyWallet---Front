@@ -8,7 +8,7 @@ import { Container, Input, Button, StyledLink, Titulo } from './LoginStyle';
 
 export default function Login(){
 
-    const { setToken, setImage } = useContext(UserContext);
+    const { setToken } = useContext(UserContext);
 
     const [loading, setLoading] = useState(false)
 
@@ -30,8 +30,8 @@ export default function Login(){
         );
     
         promise.then((response) => {
-            setToken(response.data.token);
-            navigate("/");
+            setToken(response.data)
+            navigate("/home");
         });
         promise.catch((error) => {
             alert(`Erro ao logar: \n\n${error.response.status} - ${error.response.data.message}`);

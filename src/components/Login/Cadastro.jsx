@@ -2,28 +2,31 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { ThreeDots } from 'react-loader-spinner'
-import logo from '../../assets/logo.png'
-import { Container, Input, Button, StyledLink } from './LoginStyle';
+import { Container, Input, Button, StyledLink, Titulo } from './LoginStyle';
 
-export default function Cadastro(){
+export default function Cadastro() {
     const navigate = useNavigate();
 
     const [loading, setLoading] = useState(false)
 
     const [dados, setDados] = useState({
-        email: "",
         name: "",
-        image: "",
+        email: "",
         password: ""
     });
 
-    function handleCadastro(e){
+    const [confirmSenha, setConfirmSenha] = useState("");
+
+    function handleCadastro(e) {
         e.preventDefault();
+        if (dados.password !== confirmSenha) {
+            return alert("Senhas não coincidem!");
+        }
         setLoading(true);
 
-        const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up', dados);
+        const promise = axios.post('https://mywallet-phbodias.herokuapp.com/cadastrar', dados);
 
-        promise.then(()=>navigate('/'));
+        promise.then(() => navigate('/'));
 
         promise.catch(error => {
             alert(`Erro ao cadastrar: \n\n${error.response.status} - ${error.response.data.message}`);
@@ -36,23 +39,33 @@ export default function Cadastro(){
         setDados({ ...dados, [e.target.name]: e.target.value })
     }
 
-    function limparInputs(){
+    function handleImputConfirm(e) {
+        setConfirmSenha(e.target.value)
+    }
+
+    function limparInputs() {
         setDados({
-            email: "",
-            name: "",
-            image: "",
             password: ""
-        })
+        });
+        setConfirmSenha("");
     }
 
     return (
         <Container>
-            <img src={logo} alt="logo"/>
+            <Titulo> MyWallet </Titulo>
             <form onSubmit={handleCadastro}>
+                <Input
+                    type="text"
+                    name="name"
+                    placeholder="Nome"
+                    value={dados.name}
+                    onChange={handleInputChange}
+                    desabilitado={loading}
+                />
                 <Input
                     type="email"
                     name="email"
-                    placeholder="Digite seu email..."
+                    placeholder="Email"
                     value={dados.email}
                     onChange={handleInputChange}
                     desabilitado={loading}
@@ -60,25 +73,17 @@ export default function Cadastro(){
                 <Input
                     type="password"
                     name="password"
-                    placeholder="Digite sua senha..."
+                    placeholder="Senha"
                     value={dados.password}
                     onChange={handleInputChange}
                     desabilitado={loading}
                 />
                 <Input
-                    type="text"
-                    name="name"
-                    placeholder="Digite seu nome..."
-                    value={dados.name}
-                    onChange={handleInputChange}
-                    desabilitado={loading}
-                />
-                <Input
-                    type="text"
-                    name="image"
-                    placeholder="URL da sua foto de perfil"
-                    value={dados.image}
-                    onChange={handleInputChange}
+                    type="password"
+                    name="password"
+                    placeholder="Confirme sua senha"
+                    value={confirmSenha}
+                    onChange={handleImputConfirm}
                     desabilitado={loading}
                 />
                 <Button type="submit">
