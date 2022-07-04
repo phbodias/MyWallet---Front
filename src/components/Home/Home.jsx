@@ -13,6 +13,9 @@ export default function Home() {
 
     const [saldo, setSaldo] = useState(0);
 
+    let entradas = [];
+    let saidas = [];
+
     useEffect(() => {
         pegarCarteira();
         // eslint-disable-next-line
@@ -29,12 +32,26 @@ export default function Home() {
         );
         promise.then((response) => {
             setCarteira(response.data);
-            
+            entradas = carteira.filter((movimentacao) => (movimentacao.tipo === "entrada"));
+            saidas = carteira.filter((movimentacao) => (movimentacao.tipo === "saida"));
+            calculaSaldo();
         });
         promise.catch((error) => {
             alert(`Erro ao cadastrar: \n\n${error.response.status} - ${error.response.data.message}`);
             navigate('/');
         });
+    }
+
+    function calculaSaldo() {
+        let ent = 0;
+        let sai = 0;
+        for (let i = 0; i < entradas.length; i++) {
+            ent += parseFloat(entradas[i].valor);
+        }
+        for (let i = 0; i < saidas.length; i++) {
+            sai -= parseFloat(saidas[i].valor);
+        }
+        setSaldo(ent + sai);
     }
 
     return (
@@ -51,7 +68,10 @@ export default function Home() {
                             </div>
                         )
                     })}
-                    <Saldo>{entradas - saidas}</Saldo>
+                    <Saldo>
+                        <p>Saldo</p>
+                        <Sal positivo={parseFloat(saldo) >= 0 ? true : false}>{saldo}</Sal>
+                    </Saldo>
                 </Registros>) : (<Registros>
                     <SemRegistro>
                         <p>Não há registros de entrada ou saída</p>
@@ -70,14 +90,23 @@ export default function Home() {
     )
 }
 
+const Sal = styled.div`
+    color: ${props => props.positivo ? '#03AC00' : '#C70000'};
+`
+
 const Saldo = styled.div`
-    width: 57px;
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
     height: 20px;
     font-style: normal;
     font-weight: 700;
     font-size: 17px;
     line-height: 20px;
     color: #000000;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
 `
 
 const SemRegistro = styled.div`
@@ -99,7 +128,7 @@ const SemRegistro = styled.div`
 `
 
 const Styledlink = styled(Link)`
-    width: 47.5%;
+    width: 50%;
     text-decoration: none;
     color: #FFFFFF;
 `
@@ -123,19 +152,18 @@ const Adicionar = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 85%;
+    width: 85vw;
     margin-top: 13px;
 `
 
 const Valor = styled.div`
-    width: 15%;
-    margin-right: 5px;
+    position: absolute;
+    right: 5px;
     color: ${props => props.entrada ? '#03AC00' : '#C70000'};
 `
 
 const Desc = styled.div`
-    min-width: 50%;
-    max-width: 70%;
+    min-width: 30%;
 `
 
 const Data = styled.div`
@@ -146,6 +174,7 @@ const Data = styled.div`
 `
 
 const Registros = styled.div`
+    position: relative;
     width: 85vw;
     height: 70vh;
     padding-top: 25px;
@@ -153,6 +182,7 @@ const Registros = styled.div`
     display: flex;
     flex-direction: column;
     overflow-x: scroll;
+    box-sizing: border-box;
 
     div{
         display: flex;
