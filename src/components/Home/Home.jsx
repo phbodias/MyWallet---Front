@@ -41,8 +41,8 @@ export default function Home() {
                 {carteira.map((despesa, index) => {
                     return (
                         <div>
-                            <Data>{despesa.data}</Data>
-                            <Desc>{despesa.titulo}</Desc>
+                            <Data>{despesa.date}</Data>
+                            <Desc>{despesa.descricao}</Desc>
                             <Valor>{despesa.valor}</Valor>
                         </div>
                     )

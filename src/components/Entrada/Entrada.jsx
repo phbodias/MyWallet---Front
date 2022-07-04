@@ -37,7 +37,7 @@ export default function Entrada() {
             navigate("/home");
         });
         promise.catch((error) => {
-            alert(`Erro ao logar: \n\n${error.response.status} - ${error.response.data.message}`);
+            alert(`Erro ao postar: \n\n${error.response.status} - ${error.response.data.message}`);
             setLoading(false);
         });
     }
