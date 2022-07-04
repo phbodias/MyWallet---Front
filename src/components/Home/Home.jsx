@@ -5,7 +5,7 @@ import { useNavigate, Link } from "react-router-dom";
 import styled from 'styled-components';
 
 export default function Home() {
-    const { token } = useContext(UserContext);
+    const { token, name } = useContext(UserContext);
 
     const [carteira, setCarteira] = useState([]);
 
@@ -56,7 +56,7 @@ export default function Home() {
 
     return (
         <Container>
-            <Ola>Olá, Fulano</Ola>
+            <Ola>Olá, {name}</Ola>
             {carteira.length > 0 ?
                 (<Registros>
                     {carteira.map((despesa, index) => {

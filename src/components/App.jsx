@@ -10,9 +10,10 @@ import Saida from "./Saida/Saida";
 export default function App() {
 
     const [token, setToken] = useState("");
+    const [name, setName] = useState("");
 
     return (
-        <UserContext.Provider value={{ token, setToken }}>
+        <UserContext.Provider value={{ token, setToken, name, setName }}>
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<Login />} />
