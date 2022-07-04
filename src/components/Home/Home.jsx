@@ -37,17 +37,23 @@ export default function Home() {
     return (
         <Container>
             <Ola>Olá, Fulano</Ola>
-            <Registros>
-                {carteira.map((despesa, index) => {
-                    return (
-                        <div>
-                            <Data>{despesa.date}</Data>
-                            <Desc>{despesa.descricao}</Desc>
-                            <Valor>{despesa.valor}</Valor>
-                        </div>
-                    )
-                })}
-            </Registros>
+            {carteira.length > 0 ?
+                (<Registros>
+                    {carteira.map((despesa, index) => {
+                        return (
+                            <div key={index}>
+                                <Data>{despesa.date}</Data>
+                                <Desc>{despesa.descricao}</Desc>
+                                <Valor entrada={despesa.tipo === "entrada" ? true : false}>{despesa.valor}</Valor>
+                            </div>
+                        )
+                    })}
+                </Registros>) : (<Registros>
+                    <SemRegistro>
+                        <p>Não há registros de entrada ou saída</p>
+                    </SemRegistro>
+                </Registros>)
+            }
             <Adicionar>
                 <Styledlink to="/entrada" style={{ textDecoration: 'none' }}>
                     <Entrada>Nova Entrada</Entrada>
@@ -59,6 +65,24 @@ export default function Home() {
         </Container>
     )
 }
+
+const SemRegistro = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    color: #868686;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 23px;
+    text-align: center;
+
+    p{
+        width: 55%;
+    }
+`
 
 const Styledlink = styled(Link)`
     width: 47.5%;
@@ -91,14 +115,20 @@ const Adicionar = styled.div`
 
 const Valor = styled.div`
     width: 15%;
+    margin-right: 5px;
+    color: ${props => props.entrada ? '#03AC00' : '#C70000'};
 `
 
 const Desc = styled.div`
-    width: 70%;
+    min-width: 50%;
+    max-width: 70%;
 `
 
 const Data = styled.div`
     width: 15%;
+    margin-left: 5px;
+    margin-right: 7px;
+    color: #C6C6C6;
 `
 
 const Registros = styled.div`
@@ -108,6 +138,7 @@ const Registros = styled.div`
     background-color: #FFFFFF;
     display: flex;
     flex-direction: column;
+    overflow-x: scroll;
 
     div{
         display: flex;
