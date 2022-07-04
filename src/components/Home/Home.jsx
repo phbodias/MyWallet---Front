@@ -11,6 +11,8 @@ export default function Home() {
 
     const navigate = useNavigate();
 
+    const [saldo, setSaldo] = useState(0);
+
     useEffect(() => {
         pegarCarteira();
         // eslint-disable-next-line
@@ -27,6 +29,7 @@ export default function Home() {
         );
         promise.then((response) => {
             setCarteira(response.data);
+            
         });
         promise.catch((error) => {
             alert(`Erro ao cadastrar: \n\n${error.response.status} - ${error.response.data.message}`);
@@ -48,6 +51,7 @@ export default function Home() {
                             </div>
                         )
                     })}
+                    <Saldo>{entradas - saidas}</Saldo>
                 </Registros>) : (<Registros>
                     <SemRegistro>
                         <p>Não há registros de entrada ou saída</p>
@@ -65,6 +69,16 @@ export default function Home() {
         </Container>
     )
 }
+
+const Saldo = styled.div`
+    width: 57px;
+    height: 20px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 20px;
+    color: #000000;
+`
 
 const SemRegistro = styled.div`
     display: flex;
