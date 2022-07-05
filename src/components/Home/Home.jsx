@@ -134,14 +134,14 @@ const Styledlink = styled(Link)`
 `
 
 const Saida = styled.div`
-    height: 155px;
+    height: 114px;
     background-color: #A328D6;
     padding-top: 40%;
     padding-left: 5px;
 `
 
 const Entrada = styled.div`
-    height: 155px;
+    height: 114px;
     margin-right: 5%;
     background-color: #A328D6;
     padding-top: 40%;
@@ -190,8 +190,16 @@ const Registros = styled.div`
 `
 
 const Ola = styled.div`
-    width: 141px;
-    height: 31px;
+    width: 85vw;
+    margin-top: 25px;
+    margin-bottom: 22px;
+    font-weight: 700;
+    font-size: 26px;
+    line-height: 31px;
+    color: #FFFFFF;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
 `
 
 const Container = styled.div`
