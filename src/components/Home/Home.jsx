@@ -56,7 +56,12 @@ export default function Home() {
 
     return (
         <Container>
-            <Ola>Olá, {name}</Ola>
+            <Ola>
+                <p>Olá, {name}</p>
+                <BackToLogin to="/" style={{ textDecoration: 'none' }}>
+                    <h1><ion-icon name="log-in-outline"></ion-icon></h1>
+                </BackToLogin>
+            </Ola>
             {carteira.length > 0 ?
                 (<Registros>
                     {carteira.map((despesa, index) => {
@@ -89,6 +94,11 @@ export default function Home() {
         </Container>
     )
 }
+
+const BackToLogin = styled(Link)`
+    text-decoration: none;
+    color: #FFFFFF;
+`
 
 const Sal = styled.div`
     color: ${props => props.positivo ? '#03AC00' : '#C70000'};
@@ -200,6 +210,12 @@ const Ola = styled.div`
     font-family: 'Raleway';
     font-style: normal;
     font-weight: 700;
+    display: flex;
+    justify-content: space-between;
+
+    h1{
+        font-size: 35px;
+    }
 `
 
 const Container = styled.div`
